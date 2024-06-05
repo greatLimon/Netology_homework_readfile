@@ -29,8 +29,24 @@ def readrecipes()->dict:
     cook_book[food_name] = ing
     return cook_book
 
+def get_shop_list_by_dishes(dishes:list, person:int)->dict:
+    if type(dishes) == list and len(dishes) == 0:
+        return {}
+    book = readrecipes()
+    ingridients = {}
+    for dish in dishes:
+        for ing_book in book[dish]:
+            if ing_book['ingredient_name'] in ingridients:
+                ingridients[ing_book['ingredient_name']]['quantity'] += ing_book['quantity'] * person
+            else:
+                ingridients[ing_book['ingredient_name']] = {
+                    'quantity': ing_book['quantity'] * person,
+                    'measure' : ing_book['measure']
+                }
+    return ingridients
+
 def main():
-    print(readrecipes())
+    print(get_shop_list_by_dishes(['Омлет', "Фахитос"], 3))
 
 if __name__ == '__main__':
     main()
