@@ -45,8 +45,32 @@ def get_shop_list_by_dishes(dishes:list, person:int)->dict:
                 }
     return ingridients
 
+def merge_files_with_sort_by_len()->None:
+    f1 = open('files/1.txt', 'r', encoding='utf-8')
+    f2 = open('files/2.txt', 'r', encoding='utf-8')
+    f3 = open('files/3.txt', 'r', encoding='utf-8')
+
+    data_list = [(f1.readlines(), "1"), (f2.readlines(), "2"), (f3.readlines(), "3")]
+    
+    f1.close()
+    f2.close()
+    f3.close()
+
+    data_list.sort(key = lambda data : len(data[0]))
+    with open('files/result.txt', 'w', encoding='utf-8') as res_file:
+        for data in data_list:
+            for ids, line in enumerate(data[0]):
+                res_file.write(line)
+                print(f'{line.rstrip()}\nСтрока номер {ids+1}, Файл номер {data[1]}')
+            res_file.write('\n')
+            print('\n')
+
+        ...
+
+
+
 def main():
-    print(get_shop_list_by_dishes(['Омлет', "Фахитос"], 3))
+    merge_files_with_sort_by_len()
 
 if __name__ == '__main__':
     main()
